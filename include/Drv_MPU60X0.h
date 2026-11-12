@@ -8,7 +8,7 @@
 #ifndef DRVGY_MPU6000_INC_DRVGY_MPU6000_H_
 #define DRVGY_MPU6000_INC_DRVGY_MPU6000_H_
 
-#include "DrvGY_BMP180_Cfg.h"
+#include "Drv_MPU60X0_Cfg.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -5,7 +5,7 @@
  *      Author: tmx37
  */
 
-#include "DrvGY_MPU60X0.h"
+#include "Drv_MPU60X0.h"
 
 /******************************************************************************
  * Module Preprocessor Constants

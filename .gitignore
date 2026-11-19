@@ -1,2 +1,4 @@
-module_libs
+# Add here ignored path
+module_libs/
 build
+.vscode

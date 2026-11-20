@@ -35,11 +35,11 @@
   * Function Definitions Private
   ******************************************************************************/
 
-  uint32_t MockWriteRegister(uint32_t I2cInst, uint8_t DevAddr, uint8_t RegNdx, uint8_t *pDataBuffer, uint32_t DataSize);
-  uint32_t MockReadRegister(uint32_t I2cInst, uint8_t DevAddr, uint8_t RegNdx, uint8_t *pDataBuffer, uint32_t DataSize);
-  uint32_t MockIsDeviceReady(uint32_t I2cInst, uint8_t DevAddr, uint8_t nTrials);
-  uint32_t MockMasterTransmit(uint32_t I2cInst, uint16_t DevAddress, uint8_t *pData, uint16_t Size);
-  uint32_t MockMasterReceive(uint32_t I2cInst, uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+  GenUtl_Err_t MockWriteRegister(uint8_t DevAddr, uint8_t RegNdx, uint8_t *pDataBuffer, uint32_t DataSize);
+  GenUtl_Err_t MockReadRegister(uint8_t DevAddr, uint8_t RegNdx, uint8_t *pDataBuffer, uint32_t DataSize);
+  GenUtl_Err_t MockIsDeviceReady(uint8_t DevAddr, uint8_t nTrials);
+  GenUtl_Err_t MockMasterTransmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
+  GenUtl_Err_t MockMasterReceive(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
   void MockDelay(uint32_t Delay);
 
 
@@ -72,26 +72,31 @@
     return ErrCode;
   }
 
-  uint32_t MockWriteRegister(uint32_t I2cInst, uint8_t DevAddr, uint8_t RegNdx, uint8_t *pDataBuffer, uint32_t DataSize)
+  GenUtl_Err_t MockWriteRegister(uint8_t DevAddr, uint8_t RegNdx, uint8_t *pDataBuffer, uint32_t DataSize)
   {
     return OUT_OK;
   }
-  uint32_t MockReadRegister(uint32_t I2cInst, uint8_t DevAddr, uint8_t RegNdx, uint8_t *pDataBuffer, uint32_t DataSize)
+
+  GenUtl_Err_t MockReadRegister(uint8_t DevAddr, uint8_t RegNdx, uint8_t *pDataBuffer, uint32_t DataSize)
   {
     return OUT_OK;
   }
-  uint32_t MockIsDeviceReady(uint32_t I2cInst, uint8_t DevAddr, uint8_t nTrials)
+  
+  GenUtl_Err_t MockIsDeviceReady(uint8_t DevAddr, uint8_t nTrials)
   {
     return OUT_OK;
   }
-  uint32_t MockMasterTransmit(uint32_t I2cInst, uint16_t DevAddress, uint8_t *pData, uint16_t Size)
+  
+  GenUtl_Err_t MockMasterTransmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size)
   {
     return OUT_OK;
   }
-  uint32_t MockMasterReceive(uint32_t I2cInst, uint16_t DevAddress, uint8_t *pData, uint16_t Size)
+  
+  GenUtl_Err_t MockMasterReceive(uint16_t DevAddress, uint8_t *pData, uint16_t Size)
   {
     return OUT_OK;
   }
+  
   void MockDelay(uint32_t Delay)
   {
     (void)Delay;

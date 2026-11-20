@@ -116,7 +116,7 @@
 extern "C" {
 #endif
 
-GenUtl_Err_t  Drv_MPU60X0Cfg_Init(void);
+GenUtl_Err_t  Drv_MPU60X0Cfg_Init();
 
 #ifdef __cplusplus
 } /* extern "C" */

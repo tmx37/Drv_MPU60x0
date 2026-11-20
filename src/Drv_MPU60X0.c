@@ -61,33 +61,33 @@ GenUtl_Err_t Drv_MPU60X0_Init(const Drv_MPU60X0_Config_t *pConfigData, const Drv
 
     SelectCorrectLSB();
     
-    if (!mIsDeviceReadyCB(0, DRV_MPU60X0_ADDR, 5))
+    if (!mIsDeviceReadyCB(DRV_MPU60X0_ADDR, 5))
         return OUT_ERR_NOT_READY;
 
     // PowerUp Reset
     uint8_t Pwr_Mgmt_Settings_Reset[2] = { DRV_MPU60X0_PWE_MGMT_1, mSettings.RESET_STARTUP };
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, Pwr_Mgmt_Settings_Reset, 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, Pwr_Mgmt_Settings_Reset, 2);
     mDelayCB(110);
 
     // PowerUp configuration
     uint8_t Pwr_Mgmt_Settings_CustomStartup[2] = { DRV_MPU60X0_PWE_MGMT_1, mSettings.PWE_MGMT_1_SETTINGS };
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, Pwr_Mgmt_Settings_CustomStartup, 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, Pwr_Mgmt_Settings_CustomStartup, 2);
 
     // DLPF(Digital Low Pass Filter) and FSYNC (Frame Syncronization) pin sampling configuration
     uint8_t DLPF_FSYNC_Config_Settings[2] = { DRV_MPU60X0_CONFIG, mSettings.DLPF_FSYNC_SETTINGS };
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, DLPF_FSYNC_Config_Settings, 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, DLPF_FSYNC_Config_Settings, 2);
 
     // Sample rate configuration (SMPRT_DIV)
     // uint8_t SampleRateDivider = 0;
-    // mWriteRegistersCB(0, MPU60X0_ADDR << 1, MPU60X0_SAMPLE_RATE_DIV, &SampleRateDivider, 1);
+    // mWriteRegistersCB(MPU60X0_ADDR << 1, MPU60X0_SAMPLE_RATE_DIV, &SampleRateDivider, 1);
 
     // Gyroscope configuration
     uint8_t GYRO_Config_Settings[2] = { DRV_MPU60X0_GYRO_CONFIG, mSettings.GYRO_SETTINGS };
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, GYRO_Config_Settings, 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, GYRO_Config_Settings, 2);
 
     // Accellerometer configuration
     uint8_t ACCEL_Config_Settings[2] = { DRV_MPU60X0_ACCEL_CONFIG, mSettings.ACCEL_SETTINGS };
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, ACCEL_Config_Settings, 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, ACCEL_Config_Settings, 2);
 
     // CurrentAngle configuration
     // TODO: Do "CurrentAngle" set to 0 after accellerometer check
@@ -98,10 +98,10 @@ GenUtl_Err_t Drv_MPU60X0_Init(const Drv_MPU60X0_Config_t *pConfigData, const Drv
 
 GenUtl_Err_t Drv_MPU60X0_GyroSignalPathReset()
 {
-    if (!mIsDeviceReadyCB(0, DRV_MPU60X0_ADDR, 5))
+    if (!mIsDeviceReadyCB(DRV_MPU60X0_ADDR, 5))
         return OUT_ERR_NOT_READY;
     
-    if(mWriteRegistersCB(0, DRV_MPU60X0_ADDR << 1, DRV_MPU60X0_SIGNAL_PATH_RESET, (uint8_t*)DRV_MPU60X0_GYRO_RESET_SIGNAL, 1) == OUT_OK)
+    if(mWriteRegistersCB(DRV_MPU60X0_ADDR << 1, DRV_MPU60X0_SIGNAL_PATH_RESET, (uint8_t*)DRV_MPU60X0_GYRO_RESET_SIGNAL, 1) == OUT_OK)
         return OUT_OK;
     else 
         return OUT_ERR_NOT_SUPPORTED;
@@ -109,10 +109,10 @@ GenUtl_Err_t Drv_MPU60X0_GyroSignalPathReset()
 
 GenUtl_Err_t Drv_MPU60X0_AccelSignalPathReset()
 {
-    if (!mIsDeviceReadyCB(0, DRV_MPU60X0_ADDR, 5))
+    if (!mIsDeviceReadyCB(DRV_MPU60X0_ADDR, 5))
         return OUT_ERR_NOT_READY;
         
-    if(mWriteRegistersCB(0, DRV_MPU60X0_ADDR << 1, DRV_MPU60X0_SIGNAL_PATH_RESET, (uint8_t*)DRV_MPU60X0_ACCEL_RESET_SIGNAL, 1) == OUT_OK)
+    if(mWriteRegistersCB(DRV_MPU60X0_ADDR << 1, DRV_MPU60X0_SIGNAL_PATH_RESET, (uint8_t*)DRV_MPU60X0_ACCEL_RESET_SIGNAL, 1) == OUT_OK)
         return OUT_OK;
     else 
         return OUT_ERR_NOT_SUPPORTED;
@@ -135,17 +135,17 @@ GenUtl_Err_t getGyro(GY_Data_t *output)
     if (output == NULL) 
         return OUT_ERR_INVALID_ARG;
 
-    if (!mIsDeviceReadyCB(0, DRV_MPU60X0_ADDR, 5))
+    if (!mIsDeviceReadyCB(DRV_MPU60X0_ADDR, 5))
         return OUT_ERR_NOT_READY;
 
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, &gx_out_addr_h, 1);
-    mMasterReceiveCB(0, DRV_MPU60X0_ADDR << 1, &XGRaw[0], 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, &gx_out_addr_h, 1);
+    mMasterReceiveCB(DRV_MPU60X0_ADDR << 1, &XGRaw[0], 2);
     
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, &gy_out_addr_h, 1);
-    mMasterReceiveCB(0, DRV_MPU60X0_ADDR << 1, &YGRaw[0], 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, &gy_out_addr_h, 1);
+    mMasterReceiveCB(DRV_MPU60X0_ADDR << 1, &YGRaw[0], 2);
     
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, &gz_out_addr_h, 1);
-    mMasterReceiveCB(0, DRV_MPU60X0_ADDR << 1, &ZGRaw[0], 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, &gz_out_addr_h, 1);
+    mMasterReceiveCB(DRV_MPU60X0_ADDR << 1, &ZGRaw[0], 2);
 
     output->XG = (XGRaw[0] << 8) + XGRaw[1];
     output->YG = (YGRaw[0] << 8) + YGRaw[1];
@@ -168,17 +168,17 @@ GenUtl_Err_t getAccel(ACC_Data_t *output)
     if (output == NULL) 
         return OUT_ERR_INVALID_ARG;
 
-    if (!mIsDeviceReadyCB(0, DRV_MPU60X0_ADDR, 5))
+    if (!mIsDeviceReadyCB(DRV_MPU60X0_ADDR, 5))
         return OUT_ERR_NOT_READY;
 
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, &ax_out_addr_h, 1);
-    mMasterReceiveCB(0, DRV_MPU60X0_ADDR << 1, &XARaw[0], 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, &ax_out_addr_h, 1);
+    mMasterReceiveCB(DRV_MPU60X0_ADDR << 1, &XARaw[0], 2);
     
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, &ay_out_addr_h, 1);
-    mMasterReceiveCB(0, DRV_MPU60X0_ADDR << 1, &YARaw[0], 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, &ay_out_addr_h, 1);
+    mMasterReceiveCB(DRV_MPU60X0_ADDR << 1, &YARaw[0], 2);
     
-    mMasterTrasmitCB(0, DRV_MPU60X0_ADDR << 1, &az_out_addr_h, 1);
-    mMasterReceiveCB(0, DRV_MPU60X0_ADDR << 1, &ZARaw[0], 2);
+    mMasterTrasmitCB(DRV_MPU60X0_ADDR << 1, &az_out_addr_h, 1);
+    mMasterReceiveCB(DRV_MPU60X0_ADDR << 1, &ZARaw[0], 2);
 
     output->XA = (XARaw[0] << 8) + XARaw[1];
     output->YA = (YARaw[0] << 8) + YARaw[1];
@@ -247,7 +247,7 @@ GenUtl_Err_t isMPU60X0Here(uint8_t *pIsMPUHere)
         return OUT_ERR_INVALID_ARG;
 
     uint8_t outputBuffer;
-    if(mReadRegistersCB(0, DRV_MPU60X0_ADDR << 1, DRV_MPU60X0_WHO_AM_I, &outputBuffer, 1) != 0) 
+    if(mReadRegistersCB(DRV_MPU60X0_ADDR << 1, DRV_MPU60X0_WHO_AM_I, &outputBuffer, 1) != 0) 
         return OUT_ERR_NOT_FOUND;
     
     *pIsMPUHere = (outputBuffer) ? DRV_MPU60X0_TRUE : DRV_MPU60X0_FALSE;

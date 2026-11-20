@@ -26,7 +26,6 @@ typedef void (*Drv_MPU60X0_DelayCB_t)(uint32_t Delay);
 
 typedef struct 
 {
-    uint8_t I2CInst;
     Drv_MPU60X0_WriteRegisterCB_t pfWriteRegistersI2cCB;
 	Drv_MPU60X0_ReadRegisterCB_t pfReadRegisterI2cCB;
 	Drv_MPU60X0_IsDeviceReadyCB_t pfIsDeviceReadyI2cCB;

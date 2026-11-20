@@ -50,7 +50,6 @@
   GenUtl_Err_t  Drv_MPU60X0Cfg_Init(void)
   {
     GenUtl_Err_t ErrCode;
-    mConfigData.I2CInst = 0;
     mConfigData.pfWriteRegistersI2cCB = MockWriteRegister;
     mConfigData.pfReadRegisterI2cCB = MockReadRegister;
     mConfigData.pfIsDeviceReadyI2cCB = MockIsDeviceReady;
